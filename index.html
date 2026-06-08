@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MPI: Sejarah Perancangan UUD NRI 1945</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,500&display=swap" rel="stylesheet">
+    <!-- Marked.js for beautiful Markdown rendering -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .serif-title {
+            font-family: 'Playfair Display', serif;
+        }
+        /* Custom scrollbar for chat history */
+        .chat-scroll::-webkit-scrollbar {
+            width: 6px;
+        }
+        .chat-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .chat-scroll::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
+
+    <!-- NAVIGATION BAR -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="showScreen('home')">
+                <div class="bg-red-600 text-white p-2 rounded-xl shadow-md">
+                    <i class="fa-solid fa-book-open text-lg"></i>
+                </div>
+                <div>
+                    <span class="font-bold text-slate-900 tracking-tight block text-sm sm:text-base">MPI Perancangan UUD '45</span>
+                    <span class="text-xs text-slate-500 block -mt-1">Media Pembelajaran Interaktif</span>
+                </div>
+            </div>
+            
+            <nav class="hidden md:flex space-x-1">
+                <button onclick="showScreen('home')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-red-600 bg-red-50" id="nav-home">
+                    <i class="fa-solid fa-house mr-1.5"></i> Beranda
+                </button>
+                <button onclick="showScreen('timeline')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-slate-100" id="nav-timeline">
+                    <i class="fa-solid fa-timeline mr-1.5"></i> Timeline Sejarah
+                </button>
+                <button onclick="showScreen('figures')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-slate-100" id="nav-figures">
+                    <i class="fa-solid fa-users mr-1.5"></i> Tokoh Bangsa
+                </button>
+                <button onclick="showScreen('ai')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-slate-100 animate-pulse" id="nav-ai">
+                    <i class="fa-solid fa-robot mr-1.5 text-red-500"></i> Ruang Diskusi AI
+                </button>
+                <button onclick="showScreen('quiz')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-slate-100" id="nav-quiz">
+                    <i class="fa-solid fa-graduation-cap mr-1.5"></i> Kuis Evaluasi
+                </button>
+                <button onclick="showScreen('glossary')" class="nav-btn px-3 py-2 rounded-lg text-sm font-semibold transition text-slate-600 hover:text-slate-900 hover:bg-slate-100" id="nav-glossary">
+                    <i class="fa-solid fa-spell-check mr-1.5"></i> Glosarium
+                </button>
+            </nav>
+
+            <!-- Mobile Nav Toggle -->
+            <button class="md:hidden text-slate-600 hover:text-slate-900 focus:outline-none" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars text-xl" id="menu-icon"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-4 space-y-1 shadow-inner">
+            <button onclick="showScreen('home'); toggleMobileMenu();" class="w-full text-left px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 block"><i class="fa-solid fa-house mr-2"></i>Beranda</button>
+            <button onclick="showScreen('timeline'); toggleMobileMenu();" class="w-full text-left px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 block"><i class="fa-solid fa-timeline mr-2"></i>Timeline Sejarah</button>
+            <button onclick="showScreen('figures'); toggleMobileMenu();" class="w-full text-left px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 block"><i class="fa-solid fa-users mr-2"></i>Tokoh Bangsa</button>
+            <button onclick="showScreen('ai'); toggleMobileMenu();" class="w-full text-left px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 block"><i class="fa-solid fa-robot mr-2 text-red-500"></i>Ruang Diskusi AI</button>
+            <button onclick="showScreen('quiz'); toggleMobileMenu();" class="w-full text-left px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 block"><i class="fa-solid fa-graduation-cap mr-2"></i>Kuis Evaluasi</button>
+            <button onclick="showScreen('glossary'); toggleMobileMenu();" class="w-full text-left px-4 py-2 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-100 block"><i class="fa-solid fa-spell-check mr-2"></i>Glosarium</button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- SCREEN 1: HOME/WELCOME -->
+        <section id="screen-home" class="screen block transition-all duration-300">
+            <div class="grid md:grid-cols-12 gap-8 items-center py-6">
+                <div class="md:col-span-7 space-y-6">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700">
+                        <i class="fa-solid fa-flag-checkered mr-1.5 animate-pulse"></i> Pendidikan Pancasila & Kewarganegaraan
+                    </span>
+                    <h1 class="text-4xl sm:text-5xl font-black text-slate-900 leading-tight serif-title">
+                        Membongkar Sejarah Perancangan <span class="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-amber-600">UUD NRI Tahun 1945</span>
+                    </h1>
+                    <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
+                        Selamat datang di Media Pembelajaran Interaktif! UUD 1945 tidak lahir secara instan. Ia merupakan hasil dari kompromi kebangsaan, perdebatan pemikiran yang cerdas, dan perjuangan para pendiri bangsa di bawah tekanan kolonialisme. Mari jelajahi rangkaian sejarah perancangannya!
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-2">
+                        <button onclick="showScreen('timeline')" class="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg hover:shadow-red-200 transition duration-300 flex items-center space-x-2">
+                            <span>Mulai Belajar</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button onclick="showScreen('ai')" class="bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg hover:shadow-slate-700 transition duration-300 flex items-center space-x-2">
+                            <i class="fa-solid fa-robot"></i>
+                            <span>Diskusi & Tanya AI</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="md:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-sm">
+                        <!-- Background patterns -->
+                        <div class="absolute inset-0 bg-gradient-to-tr from-red-500 to-amber-500 rounded-3xl transform rotate-6 opacity-10 blur-xl"></div>
+                        <div class="absolute inset-0 bg-red-600 rounded-3xl transform -rotate-3 opacity-5"></div>
+                        <!-- Hero card -->
+                        <div class="relative bg-white border border-slate-200 rounded-2xl shadow-xl p-6 space-y-5 overflow-hidden">
+                            <div class="bg-gradient-to-r from-red-600 to-red-700 text-white p-6 rounded-xl relative overflow-hidden">
+                                <i class="fa-solid fa-scale-balanced absolute right-4 top-4 text-7xl opacity-15"></i>
+                                <span class="text-xs uppercase font-extrabold tracking-wider opacity-75">Asisten AI Terintegrasi</span>
+                                <h3 class="text-xl font-bold mt-1">Gunakan Kekuatan Gemini AI</h3>
+                                <p class="text-xs mt-2 opacity-90 leading-relaxed">Berdiskusilah langsung dengan tokoh nasional, atau gunakan mesin pencari grounded untuk meneliti sejarah konstitusi.</p>
+                            </div>
+                            <div class="space-y-3">
+                                <h4 class="font-bold text-sm text-slate-400 uppercase tracking-widest">Fitur Unggulan Baru:</h4>
+                                <div class="flex items-start space-x-3">
+                                    <div class="bg-red-50 text-red-600 p-1 rounded mt-0.5"><i class="fa-solid fa-robot text-xs"></i></div>
+                                    <p class="text-sm text-slate-600 font-medium">Chat Roleplay dengan Sukarno & Hatta</p>
+                                </div>
+                                <div class="flex items-start space-x-3">
+                                    <div class="bg-red-50 text-red-600 p-1 rounded mt-0.5"><i class="fa-solid fa-magnifying-glass text-xs"></i></div>
+                                    <p class="text-sm text-slate-600 font-medium">Pencarian Fakta Sejarah dengan Google Search</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MENU GRID -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+                <div onclick="showScreen('timeline')" class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition cursor-pointer group hover:-translate-y-1 duration-300">
+                    <div class="bg-amber-50 text-amber-600 w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:bg-amber-600 group-hover:text-white transition duration-300">
+                        <i class="fa-solid fa-timeline text-lg"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 group-hover:text-red-600 transition">Timeline Sejarah</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Pelajari kronologi lengkap pembentukan konstitusi dari Mei hingga Agustus 1945.</p>
+                </div>
+
+                <div onclick="showScreen('figures')" class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition cursor-pointer group hover:-translate-y-1 duration-300">
+                    <div class="bg-blue-50 text-blue-600 w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
+                        <i class="fa-solid fa-users text-lg"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 group-hover:text-red-600 transition">Tokoh Perancang</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Ketahui gagasan emas dan kontribusi luar biasa dari para tokoh pendiri bangsa.</p>
+                </div>
+
+                <div onclick="showScreen('quiz')" class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition cursor-pointer group hover:-translate-y-1 duration-300">
+                    <div class="bg-rose-50 text-rose-600 w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:bg-rose-600 group-hover:text-white transition duration-300">
+                        <i class="fa-solid fa-graduation-cap text-lg"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 group-hover:text-red-600 transition">Kuis Evaluasi</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Uji pemahamanmu dengan kuis interaktif yang seru dan menantang.</p>
+                </div>
+
+                <div onclick="showScreen('ai')" class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition cursor-pointer group hover:-translate-y-1 duration-300">
+                    <div class="bg-purple-50 text-purple-600 w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:bg-purple-600 group-hover:text-white transition duration-300">
+                        <i class="fa-solid fa-comments text-lg"></i>
+                    </div>
+                    <h3 class="font-bold text-slate-900 group-hover:text-red-600 transition">Diskusi Tokoh AI</h3>
+                    <p class="text-xs text-slate-500 mt-2 leading-relaxed">Berdiskusilah langsung dengan tokoh sejarah pahlawan nasionalis perumus UUD.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 2: TIMELINE -->
+        <section id="screen-timeline" class="screen hidden transition-all duration-300">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center space-y-3 mb-12">
+                    <span class="text-xs uppercase font-extrabold tracking-widest text-red-600">Alur Kronologis</span>
+                    <h2 class="text-3xl font-bold text-slate-900 serif-title">Perjalanan Lahirnya UUD NRI 1945</h2>
+                    <p class="text-slate-500 max-w-xl mx-auto text-sm">Klik setiap tonggak sejarah berikut untuk menjelajahi peristiwa penting dan hasil kesepakatan di dalamnya.</p>
+                </div>
+
+                <!-- Navigation Timeline Buttons (Horizontal indicator) -->
+                <div class="flex overflow-x-auto pb-4 justify-between border-b border-slate-200 mb-8 scrollbar-thin">
+                    <button onclick="setActiveTimeline(1)" id="timeline-tab-1" class="timeline-tab flex-shrink-0 px-4 py-2 border-b-2 border-red-600 text-red-600 font-bold text-sm transition">
+                        1. Sidang BPUPKI I
+                    </button>
+                    <button onclick="setActiveTimeline(2)" id="timeline-tab-2" class="timeline-tab flex-shrink-0 px-4 py-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-bold text-sm transition">
+                        2. Panitia Sembilan
+                    </button>
+                    <button onclick="setActiveTimeline(3)" id="timeline-tab-3" class="timeline-tab flex-shrink-0 px-4 py-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-bold text-sm transition">
+                        3. Sidang BPUPKI II
+                    </button>
+                    <button onclick="setActiveTimeline(4)" id="timeline-tab-4" class="timeline-tab flex-shrink-0 px-4 py-2 border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-bold text-sm transition">
+                        4. Sidang PPKI
+                    </button>
+                </div>
+
+                <!-- TIMELINE CONTENT CARDS -->
+                <!-- Card 1 -->
+                <div id="timeline-content-1" class="timeline-content block bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+                        <div class="space-y-1">
+                            <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold">29 Mei - 1 Juni 1945</span>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1">Sidang Pertama BPUPKI</h3>
+                        </div>
+                        <div class="flex items-center space-x-3 bg-slate-50 p-2 rounded-xl border border-slate-150 max-w-xs">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Mohammad_Yamin_%281954%29.jpg" class="w-10 h-10 rounded-full object-cover border-2 border-amber-500 shadow-sm" alt="M. Yamin" onerror="this.src='https://placehold.co/100x100/f59e0b/ffffff?text=MY'">
+                            <div class="text-left">
+                                <p class="text-[9px] uppercase font-black text-slate-400 tracking-wider">Tokoh Pengusul</p>
+                                <p class="text-xs font-bold text-slate-700">Mr. M. Yamin</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4 text-slate-600 text-sm sm:text-base leading-relaxed">
+                        <p>
+                            Badan Penyelidik Usaha-usaha Persiapan Kemerdekaan Indonesia (BPUPKI) menggelar sidang pertamanya di Gedung Chuo Sangi In (sekarang Gedung Pancasila, Jakarta). Fokus utama sidang ini adalah merumuskan <strong>Dasar Negara</strong> yang kokoh bagi Indonesia merdeka.
+                        </p>
+                        <p>
+                            Tiga tokoh penting mengusulkan gagasannya mengenai asas dasar negara secara lisan maupun tulisan:
+                        </p>
+                        <ul class="list-disc pl-5 space-y-2 text-slate-700 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                            <li><strong>Mr. Muhammad Yamin (29 Mei)</strong>: Mengusulkan asas Peri Kebangsaan, Peri Kemanusiaan, Peri Ketuhanan, Peri Kerakyatan, dan Kesejahteraan Rakyat.</li>
+                            <li><strong>Prof. Dr. Soepomo (31 Mei)</strong>: Menekankan teori integralistik (negara persatuan) yang menyatukan seluruh golongan masyarakat.</li>
+                            <li><strong>Ir. Sukarno (1 Juni)</strong>: Menyampaikan pidato monumental "Lahirnya Pancasila" dengan rumusan Kebangsaan, Internasionalisme/Perikemanusiaan, Mufakat/Demokrasi, Kesejahteraan Sosial, dan Ketuhanan yang berkebudayaan.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div id="timeline-content-2" class="timeline-content hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+                        <div class="space-y-1">
+                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-xs font-bold">22 Juni 1945</span>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1">Lahirnya Piagam Jakarta (Jakarta Charter)</h3>
+                        </div>
+                        <div class="flex items-center space-x-3 bg-slate-50 p-2 rounded-xl border border-slate-150 max-w-xs">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c0/Presiden_Sukarno.jpg" class="w-10 h-10 rounded-full object-cover border-2 border-red-500 shadow-sm" alt="Sukarno" onerror="this.src='https://placehold.co/100x100/dc2626/ffffff?text=SK'">
+                            <div class="text-left">
+                                <p class="text-[9px] uppercase font-black text-slate-400 tracking-wider">Ketua Panitia 9</p>
+                                <p class="text-xs font-bold text-slate-700">Ir. Sukarno</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4 text-slate-600 text-sm sm:text-base leading-relaxed">
+                        <p>
+                            Setelah masa sidang pertama selesai, belum dicapai kata mufakat bulat. Dibentuklah <strong>Panitia Sembilan</strong> yang dipimpin oleh Ir. Sukarno. Panitia ini mempertemukan golongan kebangsaan (nasionalis) dan golongan keagamaan (Islam) untuk menyusun naskah pembukaan konstitusi.
+                        </p>
+                        <div class="bg-red-50/50 p-4 rounded-xl border border-red-100">
+                            <h4 class="font-bold text-red-900 text-sm mb-2"><i class="fa-solid fa-feather-pointed mr-1.5"></i>Hasil Kesepakatan:</h4>
+                            <p class="text-slate-700 text-sm">
+                                Naskah Pembukaan yang disebut <strong>Piagam Jakarta</strong>. Di dalamnya terdapat rumusan dasar negara yang pada Sila Pertama berbunyi: <em>"Ketuhanan dengan kewajiban menjalankan syariat Islam bagi pemeluk-pemeluknya."</em> Naskah inilah yang nantinya menjadi Pembukaan UUD 1945 setelah disesuaikan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div id="timeline-content-3" class="timeline-content hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+                        <div class="space-y-1">
+                            <span class="px-3 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-bold">10 - 17 Juli 1945</span>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1">Sidang Kedua BPUPKI</h3>
+                        </div>
+                        <div class="flex items-center space-x-3 bg-slate-50 p-2 rounded-xl border border-slate-150 max-w-xs">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Soepomo.jpg" class="w-10 h-10 rounded-full object-cover border-2 border-blue-500 shadow-sm" alt="Soepomo" onerror="this.src='https://placehold.co/100x100/3b82f6/ffffff?text=SP'">
+                            <div class="text-left">
+                                <p class="text-[9px] uppercase font-black text-slate-400 tracking-wider">Perancang UUD</p>
+                                <p class="text-xs font-bold text-slate-700">Prof. Dr. Soepomo</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4 text-slate-600 text-sm sm:text-base leading-relaxed">
+                        <p>
+                            Sidang kedua berfokus penuh pada penyusunan <strong>Rancangan Undang-Undang Dasar (batang tubuh)</strong>. Dibentuklah Panitia Perancang UUD yang diketuai oleh Ir. Sukarno, lalu diturunkan kembali menjadi Panitia Kecil Perancang UUD yang diketuai oleh <strong>Prof. Dr. Soepomo</strong>.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-150">
+                                <h4 class="font-bold text-slate-800 text-xs uppercase mb-1">Materi Pembahasan</h4>
+                                <p class="text-xs text-slate-600">Bentuk negara (Republik), batas wilayah negara, wilayah tanah air, kedaulatan, serta penyusunan draf pasal-pasal batang tubuh.</p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-150">
+                                <h4 class="font-bold text-slate-800 text-xs uppercase mb-1">Hasil Sidang</h4>
+                                <p class="text-xs text-slate-600">Disepakatinya rancangan UUD yang terdiri atas 3 bagian utama: Pernyataan Kemerdekaan, Pembukaan (dari Piagam Jakarta), dan Batang Tubuh UUD.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div id="timeline-content-4" class="timeline-content hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between mb-6 gap-4">
+                        <div class="space-y-1">
+                            <span class="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold">18 Agustus 1945</span>
+                            <h3 class="text-2xl font-bold text-slate-900 mt-1">Sidang PPKI & Pengesahan UUD</h3>
+                        </div>
+                        <div class="flex items-center space-x-3 bg-slate-50 p-2 rounded-xl border border-slate-150 max-w-xs">
+                            <div class="flex -space-x-3">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c0/Presiden_Sukarno.jpg" class="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm" alt="Sukarno" onerror="this.src='https://placehold.co/100x100/dc2626/ffffff?text=SK'">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Mohammad_Hatta_1950.jpg" class="w-8 h-8 rounded-full object-cover border-2 border-white shadow-sm" alt="Mohammad Hatta" onerror="this.src='https://placehold.co/100x100/f59e0b/ffffff?text=MH'">
+                            </div>
+                            <div class="text-left">
+                                <p class="text-[9px] uppercase font-black text-slate-400 tracking-wider">Dwi-Tunggal</p>
+                                <p class="text-xs font-bold text-slate-700">Sukarno & Hatta</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-4 text-slate-600 text-sm sm:text-base leading-relaxed">
+                        <p>
+                            Satu hari setelah Proklamasi Kemerdekaan, Panitia Persiapan Kemerdekaan Indonesia (PPKI) mengadakan rapat bersejarah di bawah pimpinan Ir. Sukarno dan Drs. Moh. Hatta.
+                        </p>
+                        <p class="border-l-4 border-emerald-500 pl-4 bg-emerald-50/50 py-2 rounded-r-lg">
+                            <strong>Perubahan Krusial:</strong> Pagi hari sebelum sidang, Moh. Hatta melobi tokoh Islam demi menjaga persatuan bangsa Indonesia timur. They sepakat mengubah Sila Pertama Pancasila menjadi: <strong>"Ketuhanan Yang Maha Esa"</strong>.
+                        </p>
+                        <h4 class="font-bold text-slate-800 text-sm mt-4">Keputusan Penting Sidang PPKI:</h4>
+                        <ol class="list-decimal pl-5 space-y-2 text-slate-700">
+                            <li>Mengesahkan <strong>Undang-Undang Dasar Negara Republik Indonesia Tahun 1945</strong> (UUD 1945).</li>
+                            <li>Memilih <strong>Ir. Sukarno</strong> sebagai Presiden dan <strong>Drs. Mohammad Hatta</strong> sebagai Wakil Presiden pertama.</li>
+                            <li>Membentuk <strong>Komite Nasional Indonesia Pusat (KNIP)</strong> untuk membantu tugas presiden sementara sebelum terbentuknya DPR/MPR.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Prev/Next Navigation Controls -->
+                <div class="flex justify-between items-center mt-6">
+                    <button id="btn-prev-timeline" onclick="navigateTimeline(-1)" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 text-sm font-semibold rounded-lg transition disabled:opacity-50" disabled>
+                        <i class="fa-solid fa-chevron-left mr-1"></i> Sebelumnya
+                    </button>
+                    <button id="btn-next-timeline" onclick="navigateTimeline(1)" class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg transition">
+                        Berikutnya <i class="fa-solid fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 3: TOKOH BANGSA -->
+        <section id="screen-figures" class="screen hidden transition-all duration-300">
+            <div class="text-center space-y-3 mb-10">
+                <span class="text-xs uppercase font-extrabold tracking-widest text-red-600">The Founding Fathers</span>
+                <h2 class="text-3xl font-bold text-slate-900 serif-title">Empat Pilar Utama Perancang Konstitusi</h2>
+                <p class="text-slate-500 max-w-xl mx-auto text-sm">Gagasan besar mereka adalah fondasi kehidupan bernegara kita saat ini. Klik kartu untuk membaca peran mereka.</p>
+            </div>
+
+            <!-- Figures Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card Sukarno -->
+                <div onclick="openFigureModal('sukarno')" class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition cursor-pointer group flex flex-col h-full transform hover:-translate-y-1 duration-300">
+                    <div class="relative h-64 overflow-hidden bg-slate-150 flex items-center justify-center border-b border-slate-100">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c0/Presiden_Sukarno.jpg" alt="Ir. Sukarno" class="w-full h-full object-cover object-top transition duration-500 group-hover:scale-105" onerror="handleImageError(this, 'SUK', 'from-red-600 to-red-400')">
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg group-hover:text-red-600 transition">Ir. Sukarno</h3>
+                            <p class="text-xs text-red-600 font-semibold mb-2">Ketua Panitia Sembilan</p>
+                            <p class="text-xs text-slate-500 line-clamp-3">Mengusulkan nama 'Pancasila' dan merumuskan Mukaddimah/Piagam Jakarta yang menjiwai Pembukaan UUD 1945.</p>
+                        </div>
+                        <span class="text-xs text-slate-400 mt-4 group-hover:text-slate-600 transition block font-bold">Baca Selengkapnya &rarr;</span>
+                    </div>
+                </div>
+
+                <!-- Card Moh Hatta -->
+                <div onclick="openFigureModal('hatta')" class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition cursor-pointer group flex flex-col h-full transform hover:-translate-y-1 duration-300">
+                    <div class="relative h-64 overflow-hidden bg-slate-150 flex items-center justify-center border-b border-slate-100">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Mohammad_Hatta_1950.jpg" alt="Drs. Moh. Hatta" class="w-full h-full object-cover object-top transition duration-500 group-hover:scale-105" onerror="handleImageError(this, 'HAT', 'from-amber-600 to-amber-400')">
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg group-hover:text-amber-600 transition">Drs. Moh. Hatta</h3>
+                            <p class="text-xs text-amber-600 font-semibold mb-2">Wakil Ketua PPKI</p>
+                            <p class="text-xs text-slate-500 line-clamp-3">Menjembatani rekonsiliasi sila pertama Pancasila, merangkul kemajemukan bangsa dari barat hingga timur.</p>
+                        </div>
+                        <span class="text-xs text-slate-400 mt-4 group-hover:text-slate-600 transition block font-bold">Baca Selengkapnya &rarr;</span>
+                    </div>
+                </div>
+
+                <!-- Card Soepomo -->
+                <div onclick="openFigureModal('soepomo')" class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition cursor-pointer group flex flex-col h-full transform hover:-translate-y-1 duration-300">
+                    <div class="relative h-64 overflow-hidden bg-slate-150 flex items-center justify-center border-b border-slate-100">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Soepomo.jpg" alt="Prof. Dr. Soepomo" class="w-full h-full object-cover object-top transition duration-500 group-hover:scale-105" onerror="handleImageError(this, 'SPM', 'from-blue-600 to-blue-400')">
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg group-hover:text-blue-600 transition">Prof. Dr. Soepomo</h3>
+                            <p class="text-xs text-blue-600 font-semibold mb-2">Ketua Perancang UUD</p>
+                            <p class="text-xs text-slate-500 line-clamp-3">Arsitek utama konstitusi kita. Penggagas teori integralistik dan penyusun draf pasal-pasal batang tubuh UUD.</p>
+                        </div>
+                        <span class="text-xs text-slate-400 mt-4 group-hover:text-slate-600 transition block font-bold">Baca Selengkapnya &rarr;</span>
+                    </div>
+                </div>
+
+                <!-- Card Muhammad Yamin -->
+                <div onclick="openFigureModal('yamin')" class="bg-white border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg transition cursor-pointer group flex flex-col h-full transform hover:-translate-y-1 duration-300">
+                    <div class="relative h-64 overflow-hidden bg-slate-150 flex items-center justify-center border-b border-slate-100">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Mohammad_Yamin_%281954%29.jpg" alt="Mr. M. Yamin" class="w-full h-full object-cover object-top transition duration-500 group-hover:scale-105" onerror="handleImageError(this, 'YAM', 'from-teal-600 to-teal-400')">
+                    </div>
+                    <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg group-hover:text-teal-600 transition">Mr. M. Yamin</h3>
+                            <p class="text-xs text-teal-600 font-semibold mb-2">Perumus Konsep Awal</p>
+                            <p class="text-xs text-slate-500 line-clamp-3">Menyumbangkan draf tertulis rancangan konstitusi dan memberikan usulan dasar negara paling awal.</p>
+                        </div>
+                        <span class="text-xs text-slate-400 mt-4 group-hover:text-slate-600 transition block font-bold">Baca Selengkapnya &rarr;</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MODAL DETAIL TOKOH (DOUBLE-COLUMN LAYOUT) -->
+            <div id="figure-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm transition-all duration-300">
+                <div class="bg-white rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl relative animate-in fade-in zoom-in-95 duration-200">
+                    <button onclick="closeFigureModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 transition z-10 bg-white/80 hover:bg-white rounded-full p-2 h-8 w-8 flex items-center justify-center shadow-sm">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-12 min-h-[420px]">
+                        <!-- Left: Portrait Image Column -->
+                        <div class="md:col-span-5 h-64 md:h-full relative bg-slate-100 border-r border-slate-100 flex items-center justify-center">
+                            <img id="modal-image" src="" alt="" class="w-full h-full object-cover object-top">
+                            <div id="modal-initials" class="hidden absolute inset-0 flex flex-col items-center justify-center text-white text-5xl font-black">
+                                <!-- Initials Fallback -->
+                            </div>
+                        </div>
+                        
+                        <!-- Right: Profile Content Column -->
+                        <div class="md:col-span-7 flex flex-col justify-between">
+                            <div>
+                                <div id="modal-accent" class="p-6 text-white bg-gradient-to-r from-red-600 to-amber-600 shadow-sm">
+                                    <h3 id="modal-name" class="text-2xl sm:text-3xl font-bold serif-title">Nama Tokoh</h3>
+                                    <span id="modal-role" class="text-xs font-semibold text-white/95 mt-1 block">Peran Tokoh</span>
+                                </div>
+                                
+                                <div class="p-6 space-y-4">
+                                    <div class="space-y-1.5">
+                                        <span class="text-xs uppercase font-extrabold tracking-wider text-slate-400 block">Kontribusi Utama dalam Perancangan UUD</span>
+                                        <p id="modal-desc" class="text-sm text-slate-600 leading-relaxed">
+                                            Deskripsi kontribusi tokoh...
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="p-6 pt-0">
+                                <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                    <span class="text-xs uppercase font-extrabold tracking-wider text-slate-400 block mb-1">Gagasan Emas / Kutipan</span>
+                                    <blockquote id="modal-quote" class="text-xs text-slate-600 italic font-medium">
+                                        "Kutipan..."
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 4: KUIS EVALUASI -->
+        <section id="screen-quiz" class="screen hidden transition-all duration-300">
+            <div class="max-w-2xl mx-auto">
+                <!-- Welcome/Start Screen of Quiz -->
+                <div id="quiz-start" class="text-center space-y-6 bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
+                    <div class="bg-red-50 text-red-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto shadow-md">
+                        <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <h2 class="text-2xl font-bold text-slate-900 serif-title">Uji Pemahaman Konstitusimu!</h2>
+                        <p class="text-slate-500 text-sm max-w-md mx-auto">Evaluasi pemahamanmu tentang sejarah perancangan UUD NRI Tahun 1945 melalui 5 soal pilihan ganda.</p>
+                    </div>
+                    <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 max-w-sm mx-auto text-left space-y-2">
+                        <div class="flex items-center space-x-2 text-xs text-slate-600 font-semibold">
+                            <i class="fa-solid fa-circle-question text-red-600"></i>
+                            <span>5 Soal Pilihan Ganda</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-xs text-slate-600 font-semibold">
+                            <i class="fa-solid fa-clock text-red-600"></i>
+                            <span>Tanpa batas waktu belajar santai</span>
+                        </div>
+                        <div class="flex items-center space-x-2 text-xs text-slate-600 font-semibold">
+                            <i class="fa-solid fa-award text-red-600"></i>
+                            <span>Skor instan beserta pembahasan</span>
+                        </div>
+                    </div>
+                    <button onclick="startQuiz()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3 rounded-xl transition shadow-lg hover:shadow-red-200">
+                        Mulai Kuis Sekarang
+                    </button>
+                </div>
+
+                <!-- Active Question Screen -->
+                <div id="quiz-active" class="hidden bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+                    <!-- Progress Bar -->
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center text-xs font-bold text-slate-400">
+                            <span>SOAL <span id="current-question-idx">1</span> DARI 5</span>
+                            <span id="quiz-progress-text">20% Selesai</span>
+                        </div>
+                        <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                            <div id="quiz-progress-bar" class="h-full bg-red-600 transition-all duration-300" style="width: 20%"></div>
+                        </div>
+                    </div>
+
+                    <!-- Question text -->
+                    <h3 id="question-text" class="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+                        Pertanyaan akan muncul di sini?
+                    </h3>
+
+                    <!-- Choices options -->
+                    <div id="options-container" class="space-y-3">
+                        <!-- Option buttons will be generated by JS -->
+                    </div>
+
+                    <!-- Feedback Box (Hidden initially) -->
+                    <div id="quiz-feedback" class="hidden p-4 rounded-xl border transition-all duration-300">
+                        <div class="flex items-center space-x-2 font-bold mb-1">
+                            <span id="feedback-icon"></span>
+                            <span id="feedback-title">Benar / Salah</span>
+                        </div>
+                        <p id="feedback-text" class="text-xs leading-relaxed text-slate-600">
+                            Penjelasan jawaban yang benar...
+                        </p>
+                    </div>
+
+                    <!-- Action Button -->
+                    <div class="flex justify-end pt-2">
+                        <button id="btn-next-question" onclick="nextQuestion()" class="hidden bg-slate-900 hover:bg-slate-800 text-white font-bold px-6 py-2.5 rounded-xl transition duration-200" disabled>
+                            Lanjutkan <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Result Score Screen -->
+                <div id="quiz-result" class="hidden text-center space-y-6 bg-white border border-slate-200 rounded-3xl p-8 shadow-sm">
+                    <div class="relative inline-block">
+                        <svg class="w-32 h-32 transform -rotate-90">
+                            <circle cx="64" cy="64" r="56" stroke="#f1f5f9" stroke-width="8" fill="transparent"/>
+                            <circle id="score-circle" cx="64" cy="64" r="56" stroke="#dc2626" stroke-width="8" fill="transparent" stroke-dasharray="351.8" stroke-dashoffset="351.8" class="transition-all duration-1000 ease-out"/>
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center">
+                            <span id="result-score" class="text-3xl font-black text-slate-900">0</span>
+                            <span class="text-xs text-slate-400 font-bold uppercase tracking-widest">SKOR AKHIR</span>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-2">
+                        <h2 id="result-title" class="text-2xl font-bold text-slate-900">Hebat! Kamu telah menyelesaikannya</h2>
+                        <p id="result-message" class="text-slate-500 text-sm max-w-md mx-auto">Selamat! Kamu sudah menyelesaikan seluruh materi dan kuis evaluasi perancangan UUD NRI 1945.</p>
+                    </div>
+
+                    <div class="flex flex-wrap gap-4 justify-center">
+                        <button onclick="startQuiz()" class="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-2.5 rounded-xl transition shadow-md">
+                            <i class="fa-solid fa-rotate-left mr-1.5"></i> Ulangi Kuis
+                        </button>
+                        <button onclick="showScreen('timeline')" class="bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-bold px-6 py-2.5 rounded-xl transition">
+                            Pelajari Materi Lagi
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCREEN 5: GLOSARIUM -->
+        <!-- SCREEN 6: RUANG DISKUSI AI (NEW) -->
+        <section id="screen-ai" class="screen hidden transition-all duration-300">
+            <div class="max-w-5xl mx-auto space-y-6">
+                <div class="text-center space-y-3">
+                    <span class="text-xs uppercase font-extrabold tracking-widest text-red-600"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i> Laboratorium Inovasi PPKn</span>
+                    <h2 class="text-3xl font-bold text-slate-900 serif-title">Ruang Diskusi Konstitusi AI</h2>
+                    <p class="text-slate-500 max-w-xl mx-auto text-sm">Gunakan kecerdasan buatan Gemini AI untuk mewawancarai pendiri bangsa secara langsung atau mencari referensi sejarah yang tervalidasi.</p>
+                </div>
+
+                <!-- Mode Selector -->
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                    <!-- Left Sidebar (Configuration & Mode Selector) -->
+                    <div class="md:col-span-4 space-y-6">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
+                            <h3 class="font-bold text-slate-950 text-sm uppercase tracking-wider text-slate-400">Pilih Mode Diskusi</h3>
+                            
+                            <!-- Toggle Buttons -->
+                            <div class="flex flex-col space-y-2">
+                                <button onclick="setAiMode('roleplay')" id="mode-roleplay-btn" class="w-full flex items-center space-x-3 p-3.5 rounded-xl border text-left transition font-semibold text-sm bg-red-50 border-red-200 text-red-700">
+                                    <div class="bg-red-600 text-white p-2 rounded-lg text-xs">
+                                        <i class="fa-solid fa-users-rectangle"></i>
+                                    </div>
+                                    <div>
+                                        <span class="block">Tanya Pendiri Bangsa</span>
+                                        <span class="text-[10px] text-red-600/70 block font-normal mt-0.5">Roleplay tokoh sejarah</span>
+                                    </div>
+                                </button>
+                                
+                                <button onclick="setAiMode('search')" id="mode-search-btn" class="w-full flex items-center space-x-3 p-3.5 rounded-xl border text-left transition font-semibold text-sm bg-white border-slate-200 text-slate-600 hover:bg-slate-50">
+                                    <div class="bg-slate-600 text-white p-2 rounded-lg text-xs">
+                                        <i class="fa-solid fa-globe"></i>
+                                    </div>
+                                    <div>
+                                        <span class="block">Asisten Sejarah Cerdas</span>
+                                        <span class="text-[10px] text-slate-500/70 block font-normal mt-0.5">Penelitian berbasis Google Search</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Character Selector (Only shown in roleplay mode) -->
+                        <div id="ai-character-card" class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
+                            <h3 class="font-bold text-slate-950 text-sm uppercase tracking-wider text-slate-400">Pilih Tokoh untuk Wawancara</h3>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button onclick="selectAiCharacter('sukarno')" id="char-sukarno" class="p-2 border border-red-500 bg-red-50/50 rounded-xl flex flex-col items-center text-center transition group">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c0/Presiden_Sukarno.jpg" class="w-10 h-10 rounded-full object-cover border border-red-200" alt="Sukarno" onerror="this.src='https://placehold.co/100x100/dc2626/ffffff?text=SK'">
+                                    <span class="text-xs font-bold text-slate-800 mt-1.5 block leading-tight">Ir. Sukarno</span>
+                                </button>
+                                <button onclick="selectAiCharacter('hatta')" id="char-hatta" class="p-2 border border-slate-200 hover:border-slate-300 rounded-xl flex flex-col items-center text-center transition group">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Mohammad_Hatta_1950.jpg" class="w-10 h-10 rounded-full object-cover border border-slate-200" alt="Hatta" onerror="this.src='https://placehold.co/100x100/f59e0b/ffffff?text=MH'">
+                                    <span class="text-xs font-bold text-slate-800 mt-1.5 block leading-tight">Moh. Hatta</span>
+                                </button>
+                                <button onclick="selectAiCharacter('soepomo')" id="char-soepomo" class="p-2 border border-slate-200 hover:border-slate-300 rounded-xl flex flex-col items-center text-center transition group">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Soepomo.jpg" class="w-10 h-10 rounded-full object-cover border border-slate-200" alt="Soepomo" onerror="this.src='https://placehold.co/100x100/3b82f6/ffffff?text=SP'">
+                                    <span class="text-xs font-bold text-slate-800 mt-1.5 block leading-tight">Prof. Soepomo</span>
+                                </button>
+                                <button onclick="selectAiCharacter('yamin')" id="char-yamin" class="p-2 border border-slate-200 hover:border-slate-300 rounded-xl flex flex-col items-center text-center transition group">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a8/Mohammad_Yamin_%281954%29.jpg" class="w-10 h-10 rounded-full object-cover border border-slate-200" alt="Yamin" onerror="this.src='https://placehold.co/100x100/14b8a6/ffffff?text=MY'">
+                                    <span class="text-xs font-bold text-slate-800 mt-1.5 block leading-tight">Moh. Yamin</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Info/Disclaimer box -->
+                        <div class="bg-slate-100 p-4 rounded-2xl border border-slate-200 space-y-2">
+                            <span class="text-xs uppercase font-extrabold tracking-widest text-slate-500 flex items-center gap-1">
+                                <i class="fa-solid fa-shield-halved text-red-600"></i> Informasi AI
+                            </span>
+                            <p class="text-[11px] text-slate-600 leading-relaxed">
+                                Semua dialog simulasi diproduksi oleh model AI generatif Gemini berdasarkan data kepahlawanan historis. Silakan gunakan Google Search grounding mode untuk melakukan verifikasi silang dokumen atau data administratif sejarah secara lebih presisi.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column (Chat Interface) -->
+                    <div class="md:col-span-8 flex flex-col bg-white border border-slate-200 rounded-3xl h-[550px] overflow-hidden shadow-sm">
+                        <!-- Chat Header -->
+                        <div id="chat-header" class="bg-slate-50 border-b border-slate-200 p-4 flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div id="chat-header-avatar" class="w-10 h-10 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-sm shadow-sm overflow-hidden">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c0/Presiden_Sukarno.jpg" class="w-full h-full object-cover" id="chat-header-img">
+                                </div>
+                                <div>
+                                    <h4 id="chat-header-title" class="font-bold text-slate-900 text-sm">Ir. Sukarno</h4>
+                                    <span id="chat-header-status" class="text-xs text-emerald-600 flex items-center gap-1 font-medium">
+                                        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span> Simulasi AI Tokoh Bangsa
+                                    </span>
+                                </div>
+                            </div>
+                            <button onclick="clearChatHistory()" class="text-xs text-slate-500 hover:text-red-600 transition flex items-center gap-1.5 font-bold">
+                                <i class="fa-solid fa-trash-can"></i> Bersihkan Obrolan
+                            </button>
+                        </div>
+
+                        <!-- Chat Messages Container -->
+                        <div id="chat-messages" class="flex-grow p-4 overflow-y-auto chat-scroll space-y-4 bg-slate-50/50">
+                            <!-- Messages will be dynamically rendered here -->
+                        </div>
+
+                        <!-- Input Area -->
+                        <div class="p-4 border-t border-slate-200 bg-white">
+                            <!-- Suggested Prompts -->
+                            <div class="flex overflow-x-auto pb-3 mb-2 gap-2 scrollbar-thin scroll-smooth" id="suggested-prompts-container">
+                                <!-- Suggested prompt buttons injected here -->
+                            </div>
+                            
+                            <form id="chat-form" onsubmit="sendChatMessage(event)" class="flex gap-2">
+                                <input type="text" id="chat-input" placeholder="Tanyakan sejarah perancangan UUD..." required class="flex-grow px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-red-500 transition">
+                                <button type="submit" id="chat-send-btn" class="bg-red-600 hover:bg-red-700 text-white p-3 px-5 rounded-xl transition duration-200 flex items-center justify-center shadow-md">
+                                    <i class="fa-solid fa-paper-plane"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-red-600 text-white p-1.5 rounded-lg">
+                    <i class="fa-solid fa-landmark text-xs"></i>
+                </div>
+                <span class="text-white text-sm font-bold tracking-tight">MPI Sejarah UUD NRI 1945</span>
+            </div>
+            <p class="text-xs">&copy; 2026 Media Pembelajaran Interaktif. Dirancang untuk Kelas Pendidikan Pancasila.</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // -------------------------
+        // SCREEN SWITCHING
+        // -------------------------
+        function showScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.add('hidden');
+                screen.classList.remove('block');
+            });
+
+            // Show active screen
+            const activeScreen = document.getElementById(`screen-${screenId}`);
+            if (activeScreen) {
+                activeScreen.classList.remove('hidden');
+                activeScreen.classList.add('block');
+            }
+
+            // Update Navigation Button Active Styles (for Desktop)
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-red-600', 'bg-red-50');
+                btn.classList.add('text-slate-600', 'hover:text-slate-900', 'hover:bg-slate-100');
+            });
+            const activeNavBtn = document.getElementById(`nav-${screenId}`);
+            if (activeNavBtn) {
+                activeNavBtn.classList.remove('text-slate-600', 'hover:text-slate-900', 'hover:bg-slate-100');
+                activeNavBtn.classList.add('text-red-600', 'bg-red-50');
+            }
+
+            // Reset quiz states when exiting screen quiz
+            if (screenId !== 'quiz') {
+                resetQuizToStart();
+            }
+
+            // Initialize or adjust AI screen if chosen
+            if (screenId === 'ai') {
+                initAiHub();
+            }
+
+            // Scroll window to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toggle mobile menu visibility
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.remove('hidden');
+                menuIcon.className = 'fa-solid fa-times text-xl';
+            } else {
+                mobileMenu.classList.add('hidden');
+                menuIcon.className = 'fa-solid fa-bars text-xl';
+            }
+        }
+
+        // -------------------------
+        // TIMELINE NAVIGATION
+        // -------------------------
+        let activeTimelineIdx = 1;
+        const totalTimelineItems = 4;
+
+        function setActiveTimeline(index) {
+            activeTimelineIdx = index;
+            
+            // Hide all timeline cards
+            document.querySelectorAll('.timeline-content').forEach(content => {
+                content.classList.add('hidden');
+                content.classList.remove('block');
+            });
+
+            // Show selected timeline card
+            const activeCard = document.getElementById(`timeline-content-${index}`);
+            if (activeCard) {
+                activeCard.classList.remove('hidden');
+                activeCard.classList.add('block');
+            }
+
+            // Update Tab active styles
+            document.querySelectorAll('.timeline-tab').forEach(tab => {
+                tab.classList.remove('border-red-600', 'text-red-600');
+                tab.classList.add('border-transparent', 'text-slate-500', 'hover:text-slate-800');
+            });
+            const activeTab = document.getElementById(`timeline-tab-${index}`);
+            if (activeTab) {
+                activeTab.classList.remove('border-transparent', 'text-slate-500', 'hover:text-slate-800');
+                activeTab.classList.add('border-red-600', 'text-red-600');
+            }
+
+            // Update navigation control buttons state
+            const prevBtn = document.getElementById('btn-prev-timeline');
+            const nextBtn = document.getElementById('btn-next-timeline');
+
+            prevBtn.disabled = (index === 1);
+            
+            if (index === totalTimelineItems) {
+                nextBtn.innerHTML = `Lanjut ke Kuis <i class="fa-solid fa-circle-arrow-right ml-1"></i>`;
+                nextBtn.className = "px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-lg transition";
+            } else {
+                nextBtn.innerHTML = `Berikutnya <i class="fa-solid fa-chevron-right ml-1"></i>`;
+                nextBtn.className = "px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-semibold rounded-lg transition";
+            }
+        }
+
+        function navigateTimeline(direction) {
+            let nextIndex = activeTimelineIdx + direction;
+            if (nextIndex >= 1 && nextIndex <= totalTimelineItems) {
+                setActiveTimeline(nextIndex);
+            } else if (nextIndex > totalTimelineItems) {
+                showScreen('quiz');
+            }
+        }
+
+        // -------------------------
+        // TOKONS MODAL LOGIC & PORTRAIT PHOTOS
+        // -------------------------
+        const figureData = {
+            sukarno: {
+                name: "Ir. Sukarno",
+                role: "Ketua Panitia Sembilan & Panitia Perancang UUD",
+                desc: "Ia memberikan usul nama 'Pancasila' pada 1 Juni 1945. Sukarno memimpin Panitia Sembilan merajut kebangsaan dan membidani 'Piagam Jakarta' (naskah dasar Pembukaan UUD). Selain itu ia juga menjabat sebagai ketua Panitia Perancang UUD dalam Sidang Kedua BPUPKI.",
+                quote: "\"Konstitusi kita adalah cermin dari kepribadian bangsa Indonesia sendiri. Perjuangan kemerdekaan nasional belumlah selesai sebelum konstitusi yang kedaulatannya di tangan rakyat dijalankan sepenuhnya!\"",
+                accentClass: "from-red-600 to-red-500",
+                imgUrl: "https://upload.wikimedia.org/wikipedia/commons/c/c0/Presiden_Sukarno.jpg",
+                initials: "SUK"
+            },
+            hatta: {
+                name: "Drs. Mohammad Hatta",
+                role: "Wakil Ketua PPKI & Penyelaras Sila Pertama",
+                desc: "Berperan penting dalam melobi tokoh Islam pada pagi hari tanggal 18 Agustus 1945 sebelum sidang pengesahan UUD. Demi keutuhan bangsa, ia menyepakati perubahan sila pertama Piagam Jakarta menjadi 'Ketuhanan Yang Maha Esa' agar wilayah timur Indonesia tetap bergabung dalam NKRI.",
+                quote: "\"Pancasila and UUD 1945 diciptakan bukan untuk satu golongan saja, melainkan untuk melahirkan sebuah keadilan sosial yang merata bagi seluruh bangsa tanpa terkecuali.\"",
+                accentClass: "from-amber-600 to-amber-500",
+                imgUrl: "https://upload.wikimedia.org/wikipedia/commons/3/3b/Mohammad_Hatta_1950.jpg",
+                initials: "HAT"
+            },
+            soepomo: {
+                name: "Prof. Dr. Soepomo",
+                role: "Ketua Panitia Kecil Perancang UUD",
+                desc: "Soepomo adalah desainer utama arsitektur UUD 1945. Dengan pengetahuan hukum tatanegara yang luar biasa, ia merumuskan draf pasal-pasal dalam Batang Tubuh UUD dan merumuskan asas integralistik (Negara Persatuan) agar negara mengayomi seluruh suku dan golongan.",
+                quote: "\"Negara kita adalah negara kekeluargaan (integralistik), yang tidak memihak kepada golongan terkuat, melainkan bersatu padu mengayomi seluruh jiwa rakyatnya.\"",
+                accentClass: "from-blue-600 to-blue-500",
+                imgUrl: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Soepomo.jpg",
+                initials: "SPM"
+            },
+            yamin: {
+                name: "Mr. Muhammad Yamin",
+                role: "Anggota BPUPKI & Pengusul Draf Konstitusi Awal",
+                desc: "Yamin merupakan tokoh pertama yang mempresentasikan gagasannya pada sidang 29 Mei 1945. Melalui bakat bahasa dan hukumnya, ia mengusulkan rancangan tertulis draf Pembukaan UUD dan melahirkan dasar pemikiran kebangsaan Indonesia modern.",
+                quote: "\"Membangun kemerdekaan negara tidak sekadar mendirikan bendera, melainkan memastikan hukum dasar negara melindungi kedaulatan tanah tumpah darah bangsanya.\"",
+                accentClass: "from-teal-600 to-teal-400",
+                imgUrl: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Mohammad_Yamin_%281954%29.jpg",
+                initials: "YAM"
+            }
+        };
+
+        function openFigureModal(key) {
+            const data = figureData[key];
+            if (!data) return;
+
+            document.getElementById('modal-name').innerText = data.name;
+            document.getElementById('modal-role').innerText = data.role;
+            document.getElementById('modal-desc').innerText = data.desc;
+            document.getElementById('modal-quote').innerText = data.quote;
+            
+            // Set image source and backup configuration
+            const modalImg = document.getElementById('modal-image');
+            const fallbackDiv = document.getElementById('modal-initials');
+            
+            modalImg.style.display = 'block';
+            fallbackDiv.classList.add('hidden');
+            modalImg.src = data.imgUrl;
+            modalImg.alt = data.name;
+            
+            // Keep error information on dataset
+            modalImg.dataset.initials = data.initials;
+            modalImg.dataset.accent = data.accentClass;
+            modalImg.onerror = () => handleModalImageError(modalImg);
+
+            const accent = document.getElementById('modal-accent');
+            accent.className = `p-6 text-white bg-gradient-to-r ${data.accentClass} shadow-sm`;
+
+            const modal = document.getElementById('figure-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeFigureModal() {
+            const modal = document.getElementById('figure-modal');
+            modal.classList.remove('flex');
+            modal.classList.add('hidden');
+        }
+
+        // Close modal when clicking outside content box
+        window.addEventListener('click', function(e) {
+            const modal = document.getElementById('figure-modal');
+            if (e.target === modal) {
+                closeFigureModal();
+            }
+        });
+
+        // -------------------------
+        // IMAGE FALLBACK HANDLERS
+        // -------------------------
+        function handleImageError(img, initials, gradient) {
+            img.onerror = null; // Prevent loop
+            img.style.display = 'none';
+            const parent = img.parentNode;
+            parent.innerHTML = `
+                <div class="w-full h-full bg-gradient-to-tr ${gradient} flex flex-col items-center justify-center text-white">
+                    <span class="text-4xl font-black tracking-widest">${initials}</span>
+                    <span class="text-[10px] uppercase font-semibold opacity-75 mt-1">Foto Tidak Tersedia</span>
+                </div>
+            `;
+        }
+
+        function handleModalImageError(img) {
+            img.onerror = null;
+            img.style.display = 'none';
+            const initialsDiv = document.getElementById('modal-initials');
+            initialsDiv.className = `absolute inset-0 bg-gradient-to-tr ${img.dataset.accent || 'from-slate-700 to-slate-900'} flex flex-col items-center justify-center text-white text-5xl font-black`;
+            initialsDiv.innerHTML = `
+                <span>${img.dataset.initials || 'TK'}</span>
+                <span class="text-xs uppercase font-semibold opacity-80 mt-2">Foto Tidak Tersedia</span>
+            `;
+            initialsDiv.classList.remove('hidden');
+        }
+
+        // -------------------------
+        // KUIS EVALUASI LOGIC
+        // -------------------------
+        // GEMINI AI INTEGRATION
+        // -------------------------
+        const geminiModel = 'gemini-3-flash-preview';
+        let aiMode = 'roleplay'; // 'roleplay' | 'search'
+        let selectedCharacter = 'sukarno'; // 'sukarno' | 'hatta' | 'soepomo' | 'yamin'
+
+        // Chat History maps
+        let chatHistories = {
+            roleplay: {
+                sukarno: [],
+                hatta: [],
+                soepomo: [],
+                yamin: []
+            },
+            search: []
+        };
+
+        const aiPrompts = {
+            roleplay: {
+                sukarno: {
+                    name: "Ir. Sukarno",
+                    avatar: "https://upload.wikimedia.org/wikipedia/commons/c/c0/Presiden_Sukarno.jpg",
+                    status: "Presiden RI & Ketua Panitia 9",
+                    system: `Act as Ir. Sukarno, the first president of the Republic of Indonesia and the prominent founding father. Speak passionately, patriotically, and intellectual-heavy. Use Indonesian language. Emphasize concepts like 'Pancasila', 'Gotong Royong', 'Nasionalisme', and 'Keadilan Sosial'. Address the student warmly as 'Saudara' or 'Sahabat'. Your answers should reflect your actual historical speeches, writings, and thoughts from 1945, particularly your defense of unity and the formulation of Pancasila on June 1st. Be firm but friendly, encouraging them to guard the spirit of national unity. Keep answers concise, within 2-3 short paragraphs, and historically educational.`,
+                    greeting: "Merdeka, Saudara! Saya Sukarno. Senang sekali melihat generasi muda bersemangat mempelajari sejarah hukum dasar negara kita. Silakan, apa yang ingin Saudara tanyakan tentang perjuangan perumusan Pancasila dan undang-undang dasar kita pada masa-masa genting 1945?",
+                    suggestions: [
+                        "Bagaimana lahirnya gagasan Pancasila pada 1 Juni?",
+                        "Apa peran Panitia Sembilan dalam melahirkan Piagam Jakarta?",
+                        "Apa pesan Bung Karno untuk persatuan bangsa kita hari ini?"
+                    ]
+                },
+                hatta: {
+                    name: "Drs. Mohammad Hatta",
+                    avatar: "https://upload.wikimedia.org/wikipedia/commons/3/3b/Mohammad_Hatta_1950.jpg",
+                    status: "Wakil Presiden RI pertama",
+                    system: `Act as Drs. Mohammad Hatta, the great Indonesian economist, diplomat, and co-proclaimer. Speak calmly, methodically, logically, and very structurally in Indonesian. Focus on cooperatives (koperasi), human rights (Hak Asasi Manusia - which you strongly advocated to be written explicitly in the constitution), and democratic accountability. Reflect your role on August 18, 1945, when you mediated the crucial change of the first principle of the Piagam Jakarta to 'Ketuhanan Yang Maha Esa' to maintain national integration. Keep answers informative, precise, and within 2-3 structured paragraphs.`,
+                    greeting: "Selamat datang. Saya Mohammad Hatta. Sejarah perancangan undang-undang dasar kita adalah hasil musyawarah dan mufakat yang rasional, bukan emosional. Silakan ajukan pertanyaan Saudara tentang aspek konstitusi, jaminan hak asasi, atau musyawarah 18 Agustus 1945.",
+                    suggestions: [
+                        "Mengapa sila pertama diubah pada 18 Agustus 1945?",
+                        "Kenapa Bung Hatta bersikeras memasukkan pasal HAM?",
+                        "Bagaimana konsep kedaulatan rakyat dalam UUD 1945?"
+                    ]
+                },
+                soepomo: {
+                    name: "Prof. Dr. Soepomo",
+                    avatar: "https://upload.wikimedia.org/wikipedia/commons/e/ec/Soepomo.jpg",
+                    status: "Arsitek Utama & Perancang UUD",
+                    system: `Act as Prof. Dr. Soepomo, the highly sophisticated constitutional lawyer and the chief architect of the 1945 Constitution. Speak in Indonesian with a polite, formal, academic, and legalistic tone. Explain your prominent legal philosophies, especially the 'Teori Integralistik' (Negara Persatuan/Kekeluargaan) which you presented on May 31, 1945. Explain how the state is a family unit that harmonizes all elements. Keep explanations educational, legally sound, and concise within 2-3 paragraphs.`,
+                    greeting: "Sugeng pinanggih. Saya Soepomo. Merancang undang-undang dasar memerlukan kebijaksanaan hukum tata negara yang mendalam. Dasar pemikiran saya adalah menyatukan seluruh golongan dalam sebuah Negara Persatuan (Integralistik). Apa yang ingin Anda pelajari dari Batang Tubuh UUD 1945?",
+                    suggestions: [
+                        "Apa itu Teori Integralistik dalam pandangan Anda?",
+                        "Bagaimana tugas Panitia Kecil Perancang UUD?",
+                        "Mengapa Indonesia memilih bentuk Republik, bukan Monarki?"
+                    ]
+                },
+                yamin: {
+                    name: "Mr. Muhammad Yamin",
+                    avatar: "https://upload.wikimedia.org/wikipedia/commons/a/a8/Mohammad_Yamin_%281954%29.jpg",
+                    status: "Sastrawan & Perumus Konsep Awal",
+                    system: `Act as Mr. Muhammad Yamin, the famous poet, historian, and orator who presented the first draft ideas on May 29, 1945. Speak in Indonesian with a very literary, articulate, elegant, and historically poetic vocabulary. Connect the identity of independent Indonesia with the greatness of past kingdoms like Majapahit and Sriwijaya. Reflect your passion for national culture, national language, and deep legal legacy. Keep your answers beautifully articulated, historically rich, and around 2-3 paragraphs.`,
+                    greeting: "Salam kebangsaan! Saya Muhammad Yamin. Jiwa dari sebuah konstitusi tertulis mengalir dari darah sejarah kejayaan bangsa kita sejak masa lampau. Pertanyaan apa yang membakar keingintahuanmu mengenai perdebatan paling awal perumusan falsafah negara kita?",
+                    suggestions: [
+                        "Apa saja 5 asas dasar negara yang Anda usulkan pada 29 Mei?",
+                        "Mengapa penting memasukkan batas wilayah sejarah Nusantara?",
+                        "Bagaimana bahasa Indonesia disepakati sebagai bahasa persatuan?"
+                    ]
+                }
+            },
+            search: {
+                name: "Asisten Sejarah UUD NRI",
+                avatar: "",
+                status: "AI Pencarian Google Grounded",
+                system: `Anda adalah Asisten Belajar Sejarah Indonesia yang sangat ahli dalam sejarah perumusan UUD NRI Tahun 1945. Berikan penjelasan yang obyektif, akurat, informatif, dan mendidik. Jawablah dalam bahasa Indonesia yang ramah, mudah dipahami siswa, dan rapi dalam format Markdown. Gunakan hasil penelusuran Google Search secara optimal untuk memverifikasi dokumen resmi, naskah riset terbaru, maupun tanggal-tanggal sejarah krusial.`,
+                greeting: "Halo! Saya Asisten Sejarah Cerdas Anda. Dalam mode ini, saya terhubung dengan layanan Google Search untuk menyajikan data sejarah yang tervalidasi dan aktual. Tanyakan apa saja mengenai sidang-sidang BPUPKI, isi pasal-pasal konstitusi, atau draf naskah bersejarah lainnya!",
+                suggestions: [
+                    "Apa perbedaan rancangan UUD hasil sidang BPUPKI II dengan UUD yang disahkan PPKI?",
+                    "Sebutkan isi draf Piagam Jakarta secara lengkap!",
+                    "Siapa saja anggota dari Panitia Sembilan BPUPKI?"
+                ]
+            }
+        };
+
+        // Initialize AI screen state
+        function initAiHub() {
+            setAiMode(aiMode);
+        }
+
+        // Change App AI Mode
+        function setAiMode(mode) {
+            aiMode = mode;
+            const rpBtn = document.getElementById('mode-roleplay-btn');
+            const searchBtn = document.getElementById('mode-search-btn');
+            const charCard = document.getElementById('ai-character-card');
+
+            if (mode === 'roleplay') {
+                rpBtn.className = "w-full flex items-center space-x-3 p-3.5 rounded-xl border text-left transition font-semibold text-sm bg-red-50 border-red-200 text-red-700";
+                searchBtn.className = "w-full flex items-center space-x-3 p-3.5 rounded-xl border text-left transition font-semibold text-sm bg-white border-slate-200 text-slate-600 hover:bg-slate-50";
+                charCard.classList.remove('hidden');
+                
+                // Select active character
+                selectAiCharacter(selectedCharacter);
+            } else {
+                searchBtn.className = "w-full flex items-center space-x-3 p-3.5 rounded-xl border text-left transition font-semibold text-sm bg-red-50 border-red-200 text-red-700";
+                rpBtn.className = "w-full flex items-center space-x-3 p-3.5 rounded-xl border text-left transition font-semibold text-sm bg-white border-slate-200 text-slate-600 hover:bg-slate-50";
+                charCard.classList.add('hidden');
+                
+                setupSearchModeUI();
+            }
+        }
+
+        // Setup UI for Search Grounding Mode
+        function setupSearchModeUI() {
+            // Update Chat Header
+            const avatar = document.getElementById('chat-header-avatar');
+            const img = document.getElementById('chat-header-img');
+            const title = document.getElementById('chat-header-title');
+            const status = document.getElementById('chat-header-status');
+
+            img.style.display = 'none';
+            avatar.className = "w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white font-bold shadow-sm";
+            avatar.innerHTML = `<i class="fa-solid fa-graduation-cap"></i>`;
+
+            const config = aiPrompts.search;
+            title.innerText = config.name;
+            status.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span> Google Search Grounded Mode`;
+
+            renderChatHistory();
+            renderSuggestedPrompts(config.suggestions);
+        }
+
+        // Select specific Founding Father
+        function selectAiCharacter(charKey) {
+            selectedCharacter = charKey;
+            
+            // Highlight selector UI
+            const characters = ['sukarno', 'hatta', 'soepomo', 'yamin'];
+            characters.forEach(char => {
+                const btn = document.getElementById(`char-${char}`);
+                if (char === charKey) {
+                    btn.className = "p-2 border border-red-500 bg-red-50/50 rounded-xl flex flex-col items-center text-center transition scale-105 shadow-sm";
+                } else {
+                    btn.className = "p-2 border border-slate-200 hover:border-slate-300 rounded-xl flex flex-col items-center text-center transition hover:scale-102";
+                }
+            });
+
+            const config = aiPrompts.roleplay[charKey];
+            
+            // Update Chat Header
+            const avatar = document.getElementById('chat-header-avatar');
+            const img = document.getElementById('chat-header-img');
+            const title = document.getElementById('chat-header-title');
+            const status = document.getElementById('chat-header-status');
+
+            img.style.display = 'block';
+            img.src = config.avatar;
+            img.alt = config.name;
+            title.innerText = config.name;
+            status.innerHTML = `<span class="h-1.5 w-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span> ${config.status}`;
+
+            renderChatHistory();
+            renderSuggestedPrompts(config.suggestions);
+        }
+
+        // Render Quick Prompt Suggestions
+        function renderSuggestedPrompts(suggestions) {
+            const container = document.getElementById('suggested-prompts-container');
+            container.innerHTML = '';
+            
+            suggestions.forEach(prompt => {
+                const btn = document.createElement('button');
+                btn.className = "flex-shrink-0 px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold rounded-lg transition duration-200 border border-slate-200";
+                btn.innerText = prompt;
+                btn.onclick = () => {
+                    document.getElementById('chat-input').value = prompt;
+                    document.getElementById('chat-input').focus();
+                };
+                container.appendChild(btn);
+            });
+        }
+
+        // Clear chat logs
+        function clearChatHistory() {
+            if (aiMode === 'roleplay') {
+                chatHistories.roleplay[selectedCharacter] = [];
+            } else {
+                chatHistories.search = [];
+            }
+            renderChatHistory();
+        }
+
+        // Render Chat Dialog bubbles
+        function renderChatHistory() {
+            const container = document.getElementById('chat-messages');
+            container.innerHTML = '';
+
+            let history = [];
+            let config = {};
+
+            if (aiMode === 'roleplay') {
+                history = chatHistories.roleplay[selectedCharacter];
+                config = aiPrompts.roleplay[selectedCharacter];
+            } else {
+                history = chatHistories.search;
+                config = aiPrompts.search;
+            }
+
+            // Always output first system greeting if history is empty
+            if (history.length === 0) {
+                appendChatBubble('ai', config.greeting, config);
+            } else {
+                history.forEach(msg => {
+                    appendChatBubble(msg.role, msg.text, config, msg.sources);
+                });
+            }
+
+            // Scroll to bottom
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Draw individual message bubble with beautiful Markdown parsing (marked)
+        function appendChatBubble(role, text, config, sources = []) {
+            const container = document.getElementById('chat-messages');
+            const wrapper = document.createElement('div');
+            wrapper.className = `flex ${role === 'user' ? 'justify-end' : 'justify-start'} w-full animate-in fade-in slide-in-from-bottom-2 duration-200`;
+
+            const isUser = (role === 'user');
+            
+            let avatarHtml = '';
+            if (!isUser) {
+                if (config.avatar) {
+                    avatarHtml = `<img src="${config.avatar}" class="w-8 h-8 rounded-full object-cover shadow-sm border border-slate-200 flex-shrink-0">`;
+                } else {
+                    avatarHtml = `<div class="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center text-white text-xs flex-shrink-0 shadow-sm"><i class="fa-solid fa-graduation-cap"></i></div>`;
+                }
+            }
+
+            const parsedText = marked.parse(text);
+
+            let sourceHtml = '';
+            if (sources && sources.length > 0) {
+                sourceHtml = `
+                    <div class="mt-2.5 pt-2 border-t border-slate-200 text-[10px] text-slate-500 space-y-1">
+                        <span class="font-bold uppercase tracking-wider block text-slate-400">Referensi Terverifikasi Google Search:</span>
+                        <div class="flex flex-wrap gap-1.5">
+                            ${sources.map(src => `<a href="${src.uri}" target="_blank" class="inline-flex items-center gap-1 bg-white hover:bg-slate-100 border border-slate-200 px-2 py-0.5 rounded transition text-blue-600 font-semibold"><i class="fa-solid fa-link text-[8px]"></i> ${src.title}</a>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            wrapper.innerHTML = `
+                <div class="flex items-start space-x-2.5 max-w-[85%] ${isUser ? 'flex-row-reverse space-x-reverse' : ''}">
+                    ${avatarHtml}
+                    <div class="p-3.5 rounded-2xl text-sm leading-relaxed shadow-sm ${
+                        isUser 
+                        ? 'bg-red-600 text-white rounded-tr-none' 
+                        : 'bg-white border border-slate-200 text-slate-800 rounded-tl-none'
+                    }">
+                        <div class="prose prose-sm ${isUser ? 'prose-invert text-white' : 'text-slate-800'} max-w-none">
+                            ${parsedText}
+                        </div>
+                        ${sourceHtml}
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(wrapper);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Display simulated loading dots
+        function showTypingIndicator() {
+            const container = document.getElementById('chat-messages');
+            const indicator = document.createElement('div');
+            indicator.id = 'ai-typing-indicator';
+            indicator.className = "flex justify-start w-full animate-in fade-in duration-200";
+
+            let avatarHtml = '';
+            if (aiMode === 'roleplay') {
+                const config = aiPrompts.roleplay[selectedCharacter];
+                avatarHtml = `<img src="${config.avatar}" class="w-8 h-8 rounded-full object-cover shadow-sm border border-slate-200 flex-shrink-0">`;
+            } else {
+                avatarHtml = `<div class="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center text-white text-xs flex-shrink-0 shadow-sm"><i class="fa-solid fa-graduation-cap"></i></div>`;
+            }
+
+            indicator.innerHTML = `
+                <div class="flex items-start space-x-2.5 max-w-[85%]">
+                    ${avatarHtml}
+                    <div class="p-3.5 rounded-2xl bg-white border border-slate-200 rounded-tl-none shadow-sm flex items-center space-x-1.5 h-10">
+                        <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+                        <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+                        <span class="w-2 h-2 bg-slate-400 rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+                    </div>
+                </div>
+            `;
+            container.appendChild(indicator);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('ai-typing-indicator');
+            if (indicator) indicator.remove();
+        }
+
+        // Call LLM endpoint with retry logic & optional Google Grounding
+        async function callGeminiAPI(systemPrompt, userQuery, enableSearch = false) {
+            const apiKey = ""; // Left empty for automatic proxy injection on canvas
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${geminiModel}:generateContent?key=${apiKey}`;
+
+            // Build request payload
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: {
+                    parts: [{ text: systemPrompt }]
+                }
+            };
+
+            // If mode requires search grounding, append tools object
+            if (enableSearch) {
+                payload.tools = [{ "google_search": {} }];
+            }
+
+            // Exponential backoff logic
+            let delay = 1000;
+            const maxRetries = 4;
+            
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (response.status === 429) {
+                        // Throttled, delay and retry
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        delay *= 2;
+                        continue;
+                    }
+
+                    if (!response.ok) {
+                        throw new Error(`Koneksi API gagal dengan status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const candidate = result.candidates?.[0];
+
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        const generatedText = candidate.content.parts[0].text;
+                        
+                        // Parse search metadata if applicable
+                        let sources = [];
+                        const groundingMetadata = candidate.groundingMetadata;
+                        if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                            sources = groundingMetadata.groundingAttributions
+                                .map(attribution => ({
+                                    uri: attribution.web?.uri,
+                                    title: attribution.web?.title,
+                                }))
+                                .filter(source => source.uri && source.title);
+                        }
+
+                        return { text: generatedText, sources };
+                    } else {
+                        throw new Error("Gagal memperoleh respons berstruktur tepat dari model AI.");
+                    }
+
+                } catch (err) {
+                    if (i === maxRetries - 1) {
+                        throw err; // Out of retries, rethrow
+                    }
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    delay *= 2;
+                }
+            }
+        }
+
+        // Orchestrate Chat Form Submission
+        async function sendChatMessage(e) {
+            e.preventDefault();
+            const inputField = document.getElementById('chat-input');
+            const messageText = inputField.value.trim();
+            if (!messageText) return;
+
+            inputField.value = '';
+
+            // 1. Append User Message
+            let config = (aiMode === 'roleplay') ? aiPrompts.roleplay[selectedCharacter] : aiPrompts.search;
+            appendChatBubble('user', messageText, config);
+
+            // 2. Add to Local Memory
+            let historyArray = [];
+            if (aiMode === 'roleplay') {
+                historyArray = chatHistories.roleplay[selectedCharacter];
+            } else {
+                historyArray = chatHistories.search;
+            }
+            historyArray.push({ role: 'user', text: messageText });
+
+            // 3. Trigger typing indicator
+            showTypingIndicator();
+
+            try {
+                // 4. Set prompt directives
+                let systemPrompt = '';
+                let enableSearch = false;
+
+                if (aiMode === 'roleplay') {
+                    systemPrompt = config.system;
+                    // Provide context from the previous exchanges to make conversation continuous
+                    const chatContext = historyArray.slice(-6).map(m => `${m.role === 'user' ? 'Student' : config.name}: ${m.text}`).join('\n');
+                    const userQuery = `Berikut percakapan sejauh ini:\n${chatContext}\nPertanyaan berikutnya dari Student: "${messageText}". Berikan balasan Anda sebagai ${config.name}.`;
+                    
+                    const response = await callGeminiAPI(systemPrompt, userQuery, enableSearch);
+                    
+                    removeTypingIndicator();
+                    appendChatBubble('ai', response.text, config);
+                    historyArray.push({ role: 'ai', text: response.text });
+                } else {
+                    systemPrompt = config.system;
+                    enableSearch = true; // Use Search Grounding
+                    
+                    const response = await callGeminiAPI(systemPrompt, messageText, enableSearch);
+                    
+                    removeTypingIndicator();
+                    appendChatBubble('ai', response.text, config, response.sources);
+                    historyArray.push({ role: 'ai', text: response.text, sources: response.sources });
+                }
+
+            } catch (error) {
+                removeTypingIndicator();
+                console.error(error);
+                appendChatBubble('ai', "Maaf, sistem mengalami kendala dalam menghubungkan koneksi ke server Gemini AI. Silakan periksa jaringan internet Anda atau coba kembali beberapa saat lagi.", config);
+            }
+        }
+    </script>
+</body>
+</html>
